@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 from mcp.server.fastmcp import FastMCP
+from asset_tools import register_asset_tools
 import httpx
 
 # ---------------------------------------------------------------------------
@@ -488,6 +489,11 @@ async def _resolve_search_field_id(itemtype: str, column: str, default: str) -> 
     """
     mapping = await _discover_search_options(itemtype)
     return mapping.get(column.lower(), default)
+
+
+# Register generic asset tools after search-option discovery is available.
+_asset_tools = register_asset_tools(mcp, glpi, _resolve_search_field_id)
+globals().update(_asset_tools)
 
 
 # ── Session ────────────────────────────────────────────────────────────────
