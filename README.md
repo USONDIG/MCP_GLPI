@@ -325,6 +325,29 @@ Redémarrez Claude Desktop. Si la configuration est correcte, une icône 🔌 ap
 > la suppression est **définitive et irréversible** et casse ces rattachements.
 > Réserver la purge aux doublons et aux saisies erronées.
 
+
+### 🖥️ Matériel / Assets
+
+| Tool | Description |
+|------|-------------|
+| `list_assets` | Liste les actifs par type avec pagination et filtre optionnel sur le nom |
+| `get_asset` | Lit un actif précis par type et ID |
+| `search_assets` | Recherche un actif par nom via l'API de recherche GLPI et les `listSearchOptions` dynamiques |
+| `create_asset` | Crée un actif à partir de champs GLPI |
+| `update_asset` | Modifie uniquement les champs fournis |
+| `delete_asset` | Met l'actif à la corbeille par défaut ; `purge=True` force une suppression définitive |
+
+Types pris en charge : `Computer`, `Monitor`, `NetworkEquipment`, `Printer`,
+`Peripheral`, `Phone`. Le type `AllAssets` est disponible en lecture/recherche
+uniquement.
+
+> **Sécurité :** utilisez `purge=True` uniquement lorsqu'une suppression
+> définitive et irréversible est explicitement demandée. Pour les créations et
+> modifications, les dictionnaires `fields` sont transmis comme champs GLPI :
+> n'inventez pas les IDs de références (`locations_id`, `states_id`,
+> `manufacturers_id`, `users_id`, etc.).
+
+
 ---
 
 ## Exemples d'utilisation avec Claude
@@ -804,6 +827,27 @@ Restart Claude Desktop. If the configuration is correct, a 🔌 icon will appear
 > deletion is **permanent and irreversible** and breaks those attachments.
 > Reserve purging for duplicates and data-entry mistakes.
 
+
+### 🖥️ Hardware / Assets
+
+| Tool | Description |
+|------|-------------|
+| `list_assets` | List assets by itemtype with pagination and an optional name filter |
+| `get_asset` | Read one asset by concrete itemtype and ID |
+| `search_assets` | Search asset names through GLPI search with dynamic `listSearchOptions` |
+| `create_asset` | Create an asset from raw GLPI fields |
+| `update_asset` | Update only the supplied fields |
+| `delete_asset` | Move the asset to trash by default; `purge=True` permanently purges it |
+
+Supported itemtypes: `Computer`, `Monitor`, `NetworkEquipment`, `Printer`,
+`Peripheral`, `Phone`. `AllAssets` is available for read/search only.
+
+> **Safety:** use `purge=True` only when permanent, irreversible deletion was
+> explicitly requested. The `fields` dictionaries are passed through as GLPI
+> fields, so do not invent reference IDs such as `locations_id`, `states_id`,
+> `manufacturers_id` or `users_id`.
+
+
 ---
 
 ## Usage examples with Claude
@@ -962,3 +1006,4 @@ dependencies = ["mcp>=1.9.4", "httpx>=0.27"]
 ```
 
 Then run `uv sync` again to update the environment.
+
